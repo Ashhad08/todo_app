@@ -4,15 +4,15 @@ import 'package:todo_app/backend/models/task_model.dart';
 class TaskServices {
   // Create Task
   Future createTask(TaskModel taskModel) async {
-    return await FirebaseFirestore.instance // initializes the firebase
-        .collection("taskCollection") // makes the collection(table)
-        .add(taskModel.toJson());
+    DocumentReference _ref =
+        FirebaseFirestore.instance.collection("Task Collection").doc();
+    return await _ref.set(taskModel.toJson(_ref.id));
   }
 
   // Update Task
   Future updateTask(TaskModel taskModel) async {
     return await FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .doc(taskModel.docId)
         .update({
       "title": taskModel.title,
@@ -23,7 +23,7 @@ class TaskServices {
   //Mark Task As Completed
   Future markTaskAsCompleted(String taskID) async {
     return await FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .doc(taskID)
         .update({
       "isCompleted": true,
@@ -33,7 +33,7 @@ class TaskServices {
   // Delete Task
   Future deleteTask(String taskID) async {
     return await FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .doc(taskID)
         .delete();
   }
@@ -41,7 +41,7 @@ class TaskServices {
   // Display All Tasks
   Stream<List<TaskModel>> fetchAllTasks() {
     return FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .snapshots()
         .map((docsList) => docsList.docs
             .map((singleDoc) => TaskModel.fromJson(singleDoc.data()))
@@ -51,7 +51,7 @@ class TaskServices {
   // Display Completed Tasks
   Stream<List<TaskModel>> fetchCompletedTasks() {
     return FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .where("isCompleted", isEqualTo: true)
         .snapshots()
         .map((docsList) => docsList.docs
@@ -62,7 +62,7 @@ class TaskServices {
   // Incomplete Task
   Stream<List<TaskModel>> fetchInCompletedTasks() {
     return FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .where("isCompleted", isEqualTo: false)
         .snapshots()
         .map((docsList) => docsList.docs
@@ -73,7 +73,7 @@ class TaskServices {
   // Display Specific Task Details
   Stream<TaskModel> fetchSpecificTaskDetails(String taskID) {
     return FirebaseFirestore.instance
-        .collection("taskCollection")
+        .collection("Task Collection")
         .doc(taskID)
         .snapshots()
         .map((singleTask) => TaskModel.fromJson(singleTask.data()!));

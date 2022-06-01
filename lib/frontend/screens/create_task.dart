@@ -29,10 +29,6 @@ class _CreateTaskViewState extends State<CreateTaskView> {
         ),
         body: Column(
           children: [
-            const Text(
-              "Create a new task",
-              style: TextStyle(fontSize: 24),
-            ),
             const SizedBox(
               height: 20,
             ),
@@ -45,7 +41,8 @@ class _CreateTaskViewState extends State<CreateTaskView> {
             ),
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(label: Text("Task Description")),
+              decoration:
+                  const InputDecoration(label: Text("Task Description")),
             ),
             const SizedBox(
               height: 50,
