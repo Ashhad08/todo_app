@@ -9,8 +9,6 @@ import '../widgets/button_widget.dart';
 class ForgotPassword extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
   ForgotPassword({Key? key}) : super(key: key);
 
   @override
