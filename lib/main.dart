@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/frontend/auth/signup.dart';
 
+import 'frontend/auth/login.dart';
 import 'frontend/screens/display_tasks.dart';
 
 void main() async {
@@ -15,8 +17,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false,
-      home: DisplayAllTasks(),
+      home: SignUp(),
     );
   }
 }

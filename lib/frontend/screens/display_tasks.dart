@@ -63,8 +63,7 @@ class DisplayAllTasks extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        splashColor: Colors.blue,
-                        icon: const Icon(Icons.done),
+                        icon: const Icon(Icons.done,color: Colors.black,),
                         onPressed: () {
                           _taskServices.markTaskAsCompleted(
                               _tasksList[index].docId.toString());
@@ -108,10 +107,9 @@ class DisplayAllTasks extends StatelessWidget {
                                     builder: (context) =>
                                         UpdateTask(_tasksList[index])));
                           },
-                          icon: const Icon(Icons.edit)),
+                          icon: const Icon(Icons.edit,color: Colors.black,)),
                       IconButton(
-                        splashColor: Colors.red,
-                        icon: const Icon(Icons.delete),
+                        icon: const Icon(Icons.delete,color: Colors.black,),
                         onPressed: () {
                           _taskServices
                               .deleteTask(_tasksList[index].docId.toString());

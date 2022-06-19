@@ -42,6 +42,7 @@ class TaskServices {
   Stream<List<TaskModel>> fetchAllTasks() {
     return FirebaseFirestore.instance
         .collection("Task Collection")
+        .orderBy("createdDate", descending: true)
         .snapshots()
         .map((docsList) => docsList.docs
             .map((singleDoc) => TaskModel.fromJson(singleDoc.data()))
@@ -52,6 +53,7 @@ class TaskServices {
   Stream<List<TaskModel>> fetchCompletedTasks() {
     return FirebaseFirestore.instance
         .collection("Task Collection")
+        .orderBy("createdDate", descending: true)
         .where("isCompleted", isEqualTo: true)
         .snapshots()
         .map((docsList) => docsList.docs
@@ -63,6 +65,7 @@ class TaskServices {
   Stream<List<TaskModel>> fetchInCompletedTasks() {
     return FirebaseFirestore.instance
         .collection("Task Collection")
+        .orderBy("createdDate", descending: true)
         .where("isCompleted", isEqualTo: false)
         .snapshots()
         .map((docsList) => docsList.docs

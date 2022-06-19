@@ -30,8 +30,7 @@ class DisplayCompletedTasks extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        splashColor: Colors.red,
-                        icon: const Icon(Icons.delete),
+                        icon:  Icon(Icons.delete,color: Colors.black.withOpacity(0.6),),
                         onPressed: () {
                           _taskServices
                               .deleteTask(_tasksList[index].docId.toString());

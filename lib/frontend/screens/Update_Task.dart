@@ -39,7 +39,8 @@ class _UpdateTaskState extends State<UpdateTask> {
           ),
           TextFormField(controller: _descriptionController),
           RaisedButton(
-              child: const Text("Update"),
+          color: Colors.black.withOpacity(0.6),
+              child: const Text("Update",style: TextStyle(color: Colors.white),),
               onPressed: () {
                 TaskServices()
                     .updateTask(TaskModel(
