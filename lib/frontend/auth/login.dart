@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/frontend/auth/forgot_password.dart';
 
+import '../../backend/services/auth_services.dart';
 import '../utils/app_constants.dart';
 import '../widgets/Text_form_field_widget.dart';
 import '../widgets/Text_widget.dart';
@@ -9,6 +11,7 @@ class Login extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +50,10 @@ class Login extends StatelessWidget {
                   TextFormFieldWidget(
                     controller: _emailController,
                     hintText: "Your Email",
-                    prefixIcon: const Icon(Icons.mail_outline,color: AppConstants.subTxtColor,),
+                    prefixIcon: const Icon(
+                      Icons.mail_outline,
+                      color: AppConstants.subTxtColor,
+                    ),
                     maxLines: 1,
                     minLines: 1,
                     isPasswordField: false,
@@ -67,7 +73,10 @@ class Login extends StatelessWidget {
                     maxLines: 1,
                     minLines: 1,
                     hintText: "Password",
-                    prefixIcon: const Icon(Icons.lock_outline,color: AppConstants.subTxtColor,),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: AppConstants.subTxtColor,
+                    ),
                     isPasswordField: true,
                     validator: (val) {
                       if (val.isEmpty) {
@@ -81,13 +90,48 @@ class Login extends StatelessWidget {
                     height: 12,
                   ),
                   ButtonWidget(
-                    buttonText: "Sign In",
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        return;
-                      }
-                    },
-                  ),
+                      buttonText: "Sign In",
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          AuthServices()
+                              .signInUser(
+                                  email: _emailController.text,
+                                  password: _passwordController.text)
+                              .then((value) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Message!"),
+                                    content: const Text("SignIn successfully"),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Okay"))
+                                    ],
+                                  );
+                                });
+                          }).onError((error, stackTrace) {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert!"),
+                                    content: Text(error.toString()),
+                                    actions: [
+                                      FlatButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Okay"))
+                                    ],
+                                  );
+                                });
+                          });
+                        }
+                      }),
                   const SizedBox(
                     height: 21,
                   ),
@@ -168,11 +212,19 @@ class Login extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  const TextWidget(
-                    txt: "Forgot Password?",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    textColor: AppConstants.primaryColor,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ForgotPassword()));
+                    },
+                    child: const TextWidget(
+                      txt: "Forgot Password?",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      textColor: AppConstants.primaryColor,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Row(
